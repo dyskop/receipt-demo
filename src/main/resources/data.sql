@@ -42,7 +42,6 @@ values (1, 1),
 insert into receipt.public.orders (card_id)
 values (1);
 
-
 insert into receipt.public.item (order_id, product_id, quantity)
 values (1, 5, 1),
        (1, 7, 2),
