@@ -1,54 +1,28 @@
 package by.skopinau.receipt.demo.dal.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDateTime;
 
 @Entity
 public class Receipt extends BaseEntity {
-    @Column(nullable = false)
-    private String info;
-
     @ManyToOne(optional = false)
     private Cashbox cashbox;
 
     @Column(nullable = false)
-    private LocalDate date;
+    private String info;
 
     @Column(nullable = false)
-    private LocalTime time;
+    private LocalDateTime dateTime;
 
-    @OneToMany(mappedBy = "receipt", orphanRemoval = true)
-    private Set<Purchase> purchases = new HashSet<>();
-
-    @OneToMany
-    @JoinTable(name = "receipt_promotion")
-    private Set<Promotion> promotions = new HashSet<>();
-
-    @OneToOne
-    private DiscountCard card;
-
-    @Column(precision = 9, scale = 2) // todo: nullable = false?
-    private BigDecimal total;
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    private Order order;
 
     public Receipt() {
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
     }
 
     public Cashbox getCashbox() {
@@ -59,51 +33,27 @@ public class Receipt extends BaseEntity {
         this.cashbox = cashbox;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public String getInfo() {
+        return info;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setInfo(String info) {
+        this.info = info;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
-    public Set<Purchase> getPurchases() {
-        return purchases;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setPurchases(Set<Purchase> purchases) {
-        this.purchases = purchases;
-    }
-
-    public Set<Promotion> getPromotions() {
-        return promotions;
-    }
-
-    public void setPromotions(Set<Promotion> promotions) {
-        this.promotions = promotions;
-    }
-
-    public DiscountCard getCard() {
-        return card;
-    }
-
-    public void setCard(DiscountCard card) {
-        this.card = card;
-    }
-
-    public BigDecimal getTotal() {
-        return total;
-    }
-
-    public void setTotal(BigDecimal total) {
-        this.total = total;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

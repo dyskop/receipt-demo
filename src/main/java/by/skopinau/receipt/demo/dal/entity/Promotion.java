@@ -2,6 +2,7 @@ package by.skopinau.receipt.demo.dal.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 
@@ -17,11 +18,19 @@ public class Promotion extends NamedEntity {
     private float percent;
 
     @ManyToMany
-    @JoinTable(name = "promotion_card")
+    @JoinTable(
+            name = "promotion_card",
+            joinColumns = @JoinColumn(name = "promotion_id"),
+            inverseJoinColumns = @JoinColumn(name = "card_id")
+    )
     private Set<DiscountCard> cards = new HashSet<>();
 
     @ManyToMany
-    @JoinTable(name = "promotion_product")
+    @JoinTable(
+            name = "promotion_product",
+            joinColumns = @JoinColumn(name = "promotion_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
     private Set<Product> products = new HashSet<>();
 
     public Promotion() {
