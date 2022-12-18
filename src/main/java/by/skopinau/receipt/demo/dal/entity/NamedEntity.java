@@ -8,7 +8,7 @@ public abstract class NamedEntity extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String name;
 
-    public NamedEntity() {
+    protected NamedEntity() {
     }
 
     public String getName() {

@@ -4,23 +4,26 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 
-import java.math.BigDecimal;
-
 @Entity
-public class Purchase extends BaseEntity {
+public class Item extends BaseEntity {
+    @ManyToOne(optional = false)
+    private Order order;
+
     @ManyToOne(optional = false)
     private Product product;
 
     @Column(nullable = false)
     private int quantity;
 
-    @Column(precision = 8, scale = 2) // todo: nullable = false?
-    private BigDecimal cost;
+    public Item() {
+    }
 
-    @ManyToOne(optional = false)
-    private Receipt receipt;
+    public Order getOrder() {
+        return order;
+    }
 
-    public Purchase() {
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public Product getProduct() {
@@ -37,21 +40,5 @@ public class Purchase extends BaseEntity {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public BigDecimal getCost() {
-        return cost;
-    }
-
-    public void setCost(BigDecimal cost) {
-        this.cost = cost;
-    }
-
-    public Receipt getReceipt() {
-        return receipt;
-    }
-
-    public void setReceipt(Receipt receipt) {
-        this.receipt = receipt;
     }
 }
