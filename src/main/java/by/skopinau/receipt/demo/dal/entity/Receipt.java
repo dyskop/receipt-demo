@@ -19,10 +19,17 @@ public class Receipt extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime dateTime;
 
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @OneToOne(optional = false, cascade = CascadeType.MERGE)
     private Order order;
 
     public Receipt() {
+    }
+
+    public Receipt(Cashbox cashbox, String info, LocalDateTime dateTime, Order order) {
+        this.cashbox = cashbox;
+        this.info = info;
+        this.dateTime = dateTime;
+        this.order = order;
     }
 
     public Cashbox getCashbox() {

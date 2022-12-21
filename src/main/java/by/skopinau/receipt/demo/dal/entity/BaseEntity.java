@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
@@ -29,11 +30,11 @@ public abstract class BaseEntity implements Serializable {
         if (this == o) return true;
         if (!(o instanceof BaseEntity that)) return false;
 
-        return id.equals(that.id);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id != null ? id.hashCode() : 0;
     }
 }

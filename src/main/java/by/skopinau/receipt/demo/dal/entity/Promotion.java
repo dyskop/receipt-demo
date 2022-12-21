@@ -2,6 +2,7 @@ package by.skopinau.receipt.demo.dal.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -25,7 +26,7 @@ public class Promotion extends NamedEntity {
     )
     private Set<DiscountCard> cards = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "promotion_product",
             joinColumns = @JoinColumn(name = "promotion_id"),
