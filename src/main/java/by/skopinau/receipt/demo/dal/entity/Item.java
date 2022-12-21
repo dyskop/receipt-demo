@@ -1,11 +1,13 @@
 package by.skopinau.receipt.demo.dal.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Item extends BaseEntity {
+    @JsonIgnore
     @ManyToOne(optional = false)
     private Order order;
 

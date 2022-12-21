@@ -1,7 +1,9 @@
 package by.skopinau.receipt.demo.dal.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -14,15 +16,16 @@ import java.util.Set;
 @Entity
 @Table(name = "orders")
 public class Order extends BaseEntity {
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     private Set<Item> items = new HashSet<>();
 
     @ManyToOne
     private DiscountCard card;
 
-    @Column(precision = 8, scale = 2) // todo: nullable = false?
+    @Column(precision = 8, scale = 2)
     private BigDecimal total;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "order", optional = false)
     private Receipt receipt;
 

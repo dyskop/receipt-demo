@@ -3,10 +3,12 @@ package by.skopinau.receipt.demo.service.impl;
 import by.skopinau.receipt.demo.dal.entity.BaseEntity;
 import by.skopinau.receipt.demo.dal.repository.BaseRepository;
 import by.skopinau.receipt.demo.service.CrudService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 public abstract class BaseService<E extends BaseEntity> implements CrudService<E> {
     private final BaseRepository<E> repository;
 

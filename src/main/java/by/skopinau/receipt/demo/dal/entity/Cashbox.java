@@ -1,5 +1,6 @@
 package by.skopinau.receipt.demo.dal.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
@@ -8,6 +9,7 @@ import java.util.Set;
 
 @Entity
 public class Cashbox extends BaseEntity {
+    @JsonIgnore
     @OneToMany(mappedBy = "cashbox", orphanRemoval = true)
     private Set<Receipt> receipts = new HashSet<>();
 
