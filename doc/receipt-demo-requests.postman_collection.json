@@ -15,7 +15,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/receipts/check?productId=5&card=1&productId=7&productId=7",
+							"raw": "http://localhost:8080/receipts/search?productId=5&card=1&productId=7&productId=7",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -23,7 +23,7 @@
 							"port": "8080",
 							"path": [
 								"receipts",
-								"check"
+								"search"
 							],
 							"query": [
 								{

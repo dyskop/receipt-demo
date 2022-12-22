@@ -19,7 +19,7 @@ public class ReceiptController {
     @Autowired
     private ReceiptService receiptService;
 
-    @GetMapping("/check")
+    @GetMapping("/search")
     public ResponseEntity<List<Receipt>> getByProductsAndCard(
             @RequestParam List<Integer> productId,
             @RequestParam(defaultValue = "0") Integer card) {

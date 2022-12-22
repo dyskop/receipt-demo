@@ -20,7 +20,7 @@ values ('bread', 1.50),
 insert into receipt.public.promotion (name, is_active, percent)
 values ('Fantastic 5', true, 10.00),
        ('Happy Birthday', true, 15.00),
-       ('Happy New Year', true, 20.23);
+       ('Happy New Year', true, 20.00);
 
 insert into receipt.public.promotion_card
 values (1, 1),
@@ -39,12 +39,12 @@ values (1, 1),
        (2, 7),
        (3, 6);
 
-insert into receipt.public.orders (card_id)
-values (1),
-       (1),
-       (1),
-       (null),
-       (1);
+insert into receipt.public.orders (card_id, total)
+values (1, 24.52),
+       (1, 23.55),
+       (1, 15.73),
+       (null, 1.50),
+       (2, 15.73);
 
 insert into receipt.public.item (order_id, product_id, quantity)
 values (1, 5, 1),
