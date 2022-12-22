@@ -4,6 +4,8 @@ import by.skopinau.receipt.demo.dal.entity.Receipt;
 import by.skopinau.receipt.demo.dal.repository.ReceiptRepository;
 import by.skopinau.receipt.demo.service.ReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +16,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
+@CacheConfig(cacheNames="application")
 public class ReceiptServiceImpl extends BaseService<Receipt> implements ReceiptService {
     @Autowired
     private ReceiptRepository receiptRepository;
@@ -24,6 +27,7 @@ public class ReceiptServiceImpl extends BaseService<Receipt> implements ReceiptS
 
     @Override
     @Transactional
+    @Cacheable
     public Optional<List<Receipt>> findByProductsAndCard(List<Integer> productId, Integer cardId) {
         Map<Integer, Long> countedProducts = productId.stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
