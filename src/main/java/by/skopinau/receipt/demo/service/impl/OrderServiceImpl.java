@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
@@ -66,8 +67,8 @@ public class OrderServiceImpl extends BaseService<Order> implements OrderService
     @CacheEvict(allEntries = true)
     public Optional<Order> save(OrderRequest dto) {
         Order order = new Order();
-        DiscountCard card = cardRepository.findById(dto.getCard()).orElseThrow();
-        order.setCard(card);
+        Optional<DiscountCard> card = cardRepository.findById(dto.getCard());
+        card.ifPresent(order::setCard);
         Order savedOrder = orderRepository.save(order);
 
         Cashbox cashbox = cashboxRepository.findById(dto.getCashbox()).orElseThrow();
@@ -93,11 +94,16 @@ public class OrderServiceImpl extends BaseService<Order> implements OrderService
     }
 
     // todo: decompose
-    private BigDecimal calculateTotal(Set<Item> items, DiscountCard card) {
+    private BigDecimal calculateTotal(Set<Item> items, Optional<DiscountCard> card) {
         BigDecimal total = new BigDecimal(0);
-        Map<Promotion, Set<Product>> promos = card.getPromotions().stream()
-                .filter(Promotion::isActive)
-                .collect(Collectors.toMap(promotion -> promotion, Promotion::getProducts));
+
+        Map<Promotion, Set<Product>> promos = new HashMap<>();
+
+        if (card.isPresent()) {
+            promos = card.get().getPromotions().stream()
+                    .filter(Promotion::isActive)
+                    .collect(Collectors.toMap(promotion -> promotion, Promotion::getProducts));
+        }
 
         int counter = 0;
         BigDecimal temp = new BigDecimal(0);
@@ -138,6 +144,8 @@ public class OrderServiceImpl extends BaseService<Order> implements OrderService
 
         if (counter >= 5) {
             total = total.add(temp.multiply(BigDecimal.valueOf(1 - percent / 100)));
+        } else {
+            total = total.add(temp);
         }
 
         return total;
