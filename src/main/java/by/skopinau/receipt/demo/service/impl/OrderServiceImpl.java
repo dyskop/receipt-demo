@@ -18,6 +18,8 @@ import by.skopinau.receipt.demo.service.OrderService;
 import by.skopinau.receipt.demo.web.dto.ItemRequest;
 import by.skopinau.receipt.demo.web.dto.OrderRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +32,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@CacheConfig(cacheNames="application")
 public class OrderServiceImpl extends BaseService<Order> implements OrderService {
     private static final String RECEIPT_INFO = "DREAM MARKET";
 
@@ -60,6 +63,7 @@ public class OrderServiceImpl extends BaseService<Order> implements OrderService
 
     @Override
     @Transactional
+    @CacheEvict(allEntries = true)
     public Optional<Order> save(OrderRequest dto) {
         Order order = new Order();
         DiscountCard card = cardRepository.findById(dto.getCard()).orElseThrow();
